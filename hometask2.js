@@ -55,12 +55,12 @@ const myIterable = {
 
   [Symbol.iterator]() {
     const checkForCurrentExist = typeof this.from === 'number' ? this.from : false;
-    const checkIfCurrentIsNotNum = !isNaN(this.from);
+    const checkIfCurrentIsNum = !isNaN(this.from);
     const checkForLastExist = typeof this.to === 'number' ? this.to : false;
-    const checkIfLastIsNotNum = !isNaN(this.to);
+    const checkIfLastIsNum = !isNaN(this.to);
 
-    const currentExistAndNumber = checkForCurrentExist && checkIfCurrentIsNotNum;
-    const lastExistAndNumber = checkForLastExist && checkIfLastIsNotNum;
+    const currentExistAndNumber = checkForCurrentExist && checkIfCurrentIsNum;
+    const lastExistAndNumber = checkForLastExist && checkIfLastIsNum;
 
     if (this.from > this.to) {
       throw new Error('Значение to больше значения from.');
