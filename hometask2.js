@@ -32,11 +32,13 @@ function selectFromInterval(arr, firstIntVal, secondIntVal) {
   const sortedIntervalValues = arrWithIntVals.sort((a, b) => a - b);
   const minIntervalValue = sortedIntervalValues[0];
   const maxIntervalValue = sortedIntervalValues[1];
-
+  
   for (let key of arr) {
-    const compareValsInArr = key >= minIntervalValue && key <= maxIntervalValue;
+    const keyGreaterThanMin = key >= minIntervalValue;
+    const keyLessThanMax = key <= maxIntervalValue;
+    const compareValsInArr = keyGreaterThanMin && keyLessThanMax;
 
-    if (isNaN(key)) {
+    if (typeof key !== 'number') {
       resultArr = [];
       throw new Error('Переданое первое значение должно являться массивом с числовыми значениями.');
     }
