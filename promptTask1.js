@@ -1,18 +1,13 @@
-
-function checkIfNumber(value) {
-  return !!(parseInt(value) == value);
-}
-
 function makeCalculatedOutput() {
   const firstPrompt = prompt('Введите, пожалуйста, число.');
   const secondPrompt = prompt('Введите ещё одно число');
-  const valuesValid = checkIfNumber(firstPrompt) || checkIfNumber(secondPrompt);
+  const valuesNotValid = !Number.isSafeInteger(Number(firstPrompt)) || !Number.isSafeInteger(Number(secondPrompt));
   
-  if (!valuesValid) {
+  if (valuesNotValid) {
     return console.log('Некорректный ввод!');
   }
 
-  console.log(parseInt(firstPrompt).toString(parseInt(secondPrompt)));
+  console.log(Number(firstPrompt).toString(Number(secondPrompt)));
 }
 
 makeCalculatedOutput();
