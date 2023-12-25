@@ -1,8 +1,12 @@
 function checkIfNumber(value) {
-  const isNumberCorrect = Number.isSafeInteger(Number(value));
-  const checkForValidInput = isNumberCorrect ? true : console.log('Некорректный ввод!');
-
-  return checkForValidInput;
+  const isNumberCorrect = (value === '') ? false : Number.isSafeInteger(Number(value));
+  
+  if (isNumberCorrect) {
+    return true;
+  } else {
+    console.log('Некорректный ввод!');
+    return false;
+  }
 }
 
 function makeCalculatedOutput() {
