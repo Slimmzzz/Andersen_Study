@@ -22,7 +22,7 @@ function makeObjectDeepCopy(obj) {
 
 function selectFromInterval(arr, firstIntVal, secondIntVal) {
   let resultArr = [];
-  const notValidIntVals = Number.isSafeInteger(firstIntVal) || Number.isSafeInteger(secondIntVal);
+  const notValidIntVals = isNaN(firstIntVal) || isNaN(secondIntVal);
 
   if (notValidIntVals) {
     throw new Error('Одно из значений интервала не является валидным числом.');
@@ -38,7 +38,7 @@ function selectFromInterval(arr, firstIntVal, secondIntVal) {
     const keyLessOrEqualsThanMax = key <= maxIntervalValue;
     const compareValsInArr = keyGreaterOrEqualsThanMin && keyLessOrEqualsThanMax;
 
-    if (!Number.isSafeInteger(key)) {
+    if (isNaN(key)) {
       resultArr = [];
       throw new Error('Переданое первое значение должно являться массивом с числовыми значениями.');
     }
@@ -56,8 +56,8 @@ const myIterable = {
   to: 6,
 
   [Symbol.iterator]() {
-    const validationForCurrent = Number.isSafeInteger(this.from) ? this.from : false;
-    const validationForLast = Number.isSafeInteger(this.to) ? this.to : false;
+    const validationForCurrent = !isNaN(this.from) ? this.from : false;
+    const validationForLast = !isNaN(this.to) ? this.to : false;
 
     if (this.from > this.to) {
       throw new Error('Значение to больше значения from.');
