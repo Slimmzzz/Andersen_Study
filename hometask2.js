@@ -22,7 +22,7 @@ function makeObjectDeepCopy(obj) {
 
 function selectFromInterval(arr, firstIntVal, secondIntVal) {
   let resultArr = [];
-  const notValidIntVals = isNaN(firstIntVal) || isNaN(secondIntVal);
+  const notValidIntVals = Number.isSafeInteger(firstIntVal) || Number.isSafeInteger(secondIntVal);
 
   if (notValidIntVals) {
     throw new Error('Одно из значений интервала не является валидным числом.');
@@ -34,11 +34,11 @@ function selectFromInterval(arr, firstIntVal, secondIntVal) {
   const maxIntervalValue = sortedIntervalValues[1];
   
   for (let key of arr) {
-    const keyGreaterThanMin = key >= minIntervalValue;
-    const keyLessThanMax = key <= maxIntervalValue;
-    const compareValsInArr = keyGreaterThanMin && keyLessThanMax;
+    const keyGreaterOrEqualsThanMin = key >= minIntervalValue;
+    const keyLessOrEqualsThanMax = key <= maxIntervalValue;
+    const compareValsInArr = keyGreaterOrEqualsThanMin && keyLessOrEqualsThanMax;
 
-    if (typeof key !== 'number') {
+    if (!Number.isSafeInteger(key)) {
       resultArr = [];
       throw new Error('Переданое первое значение должно являться массивом с числовыми значениями.');
     }
@@ -56,19 +56,14 @@ const myIterable = {
   to: 6,
 
   [Symbol.iterator]() {
-    const checkForCurrentExist = typeof this.from === 'number' ? this.from : false;
-    const checkIfCurrentIsNum = !isNaN(this.from);
-    const checkForLastExist = typeof this.to === 'number' ? this.to : false;
-    const checkIfLastIsNum = !isNaN(this.to);
-
-    const currentExistAndNumber = checkForCurrentExist && checkIfCurrentIsNum;
-    const lastExistAndNumber = checkForLastExist && checkIfLastIsNum;
+    const validationForCurrent = Number.isSafeInteger(this.from) ? this.from : false;
+    const validationForLast = Number.isSafeInteger(this.to) ? this.to : false;
 
     if (this.from > this.to) {
       throw new Error('Значение to больше значения from.');
     }
 
-    if (!currentExistAndNumber || !lastExistAndNumber) {
+    if (!validationForCurrent || !validationForLast) {
       throw new Error('Значение "FROM" или "TO" отсутствует, либо не является числом');
     }
 
@@ -91,3 +86,4 @@ const myIterable = {
     }
   }
 }
+ 
