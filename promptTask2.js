@@ -1,12 +1,7 @@
 function checkIfNumber(value) {
-  const isNumberCorrect = (value === '') ? false : Number.isSafeInteger(Number(value));
+  const isNumberCorrect = value.trim().length && !isNaN(value);
   
-  if (isNumberCorrect) {
-    return true;
-  } else {
-    console.log('Некорректный ввод!');
-    return false;
-  }
+  return isNumberCorrect;
 }
 
 function makeCalculatedOutput() {
@@ -23,7 +18,11 @@ function makeCalculatedOutput() {
       const output = `Ответ: ${addition}, ${divisor}`;
   
       console.log(output);
+    } else {
+      console.log('Некорректный ввод!');
     }
+  } else {
+    console.log('Некорректный ввод!');
   }
 }
 

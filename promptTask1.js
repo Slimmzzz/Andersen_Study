@@ -1,9 +1,9 @@
 function makeCalculatedOutput() {
-  const firstPrompt = prompt('Введите, пожалуйста, число.');
-  const secondPrompt = prompt('Введите ещё одно число');
-  const firstPromptCheck = (firstPrompt === '') ? false : Number.isSafeInteger(Number(firstPrompt));
-  const secondPromptCheck = (secondPrompt === '') ? false : Number.isSafeInteger(Number(secondPrompt));
-  const valuesNotValid = !firstPromptCheck || !secondPromptCheck;
+  const firstInput = prompt('Введите, пожалуйста, число.');
+  const secondInput = prompt('Введите ещё одно число');
+  const firstInputValid = firstInput.trim().length && !isNaN(firstInput);
+  const secondInputValid = secondInput.trim().length && !isNaN(secondInput);
+  const valuesNotValid = !firstInputValid || !secondInputValid;
   
   if (valuesNotValid) {
     return console.log('Некорректный ввод!');
