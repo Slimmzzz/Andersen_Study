@@ -2,8 +2,8 @@ function makeObjectDeepCopy(obj) {
   const newObj = {};
 
   for (let key in obj) {
-    const errorObjectType = obj[key].__proto__.constructor.name === 'Error';
-    const dateObjectType = obj[key].__proto__.constructor.name === 'Date';
+    const errorObjectType = obj[key].constructor.name === 'Error';
+    const dateObjectType = obj[key].constructor.name === 'Date';
     const notPlainObject = errorObjectType || dateObjectType;
     
     if (typeof obj[key] === 'function') {
