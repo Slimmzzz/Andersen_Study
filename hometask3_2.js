@@ -3,6 +3,7 @@ function createDebounceFunction(callback, delay) {
 
   return function(...arguments) {
     clearTimeout(timeoutId);
+    
     timeoutId = setTimeout(() => callback(...arguments), delay);
   };
 }
