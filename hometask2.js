@@ -56,14 +56,14 @@ const myIterable = {
   to: 6,
 
   [Symbol.iterator]() {
-    const validationForCurrent = !isNaN(this.from) ? this.from : false;
-    const validationForLast = !isNaN(this.to) ? this.to : false;
+    const validationForCurrent = isNaN(this.from);
+    const validationForLast = isNaN(this.to);
 
     if (this.from > this.to) {
       throw new Error('Значение to больше значения from.');
     }
 
-    if (!validationForCurrent || !validationForLast) {
+    if (validationForCurrent || validationForLast) {
       throw new Error('Значение "FROM" или "TO" отсутствует, либо не является числом');
     }
 
@@ -86,4 +86,3 @@ const myIterable = {
     }
   }
 }
- 
