@@ -22,7 +22,7 @@ class Calculator {
 
   setX(newX) {
     if (!checkNumberValid(newX)) {
-      throw new Error('Введено невалидное число.');
+      throw new Error('Введено невалидное число, либо значение отсутствует.');
     }
 
     return this.x = newX;
@@ -30,7 +30,7 @@ class Calculator {
 
   setY(newY) {
     if (!checkNumberValid(newY)) {
-      throw new Error('Введено невалидное число.');
+      throw new Error('Введено невалидное число, либо значение отсутствует.');
     }
 
     return this.y = newY;
