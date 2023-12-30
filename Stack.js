@@ -92,7 +92,7 @@ class Stack {
       throw new Error('Сущность не является итерируемой.');
     }
 
-    const stackLength = iterable.length || iterable.size;
+    const stackLength = iterable.length || iterable.size || Object.keys(iterable).length;
     const stack = new Stack(stackLength);
 
     for (let element of iterable) {
