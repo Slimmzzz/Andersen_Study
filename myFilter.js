@@ -7,6 +7,10 @@ Array.prototype.myFilter = function(callbackFunc, thisArg = null) {
         resultArr.push(this[i]);
       }
     }
+
+    if (callbackFunc(this[i], i, this)) {
+      resultArr.push(this[i]);
+    }
   }
 
   return resultArr;
