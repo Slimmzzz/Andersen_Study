@@ -6,13 +6,10 @@ class Node {
 }
 
 class Stack {
-  static stackLength;
-  static head;
-
   constructor(maxElemsInStack = 10) {
     this.maxStackLength = maxElemsInStack;
-    Stack.head = null;
-    Stack.stackLength = 0;
+    this.head = null;
+    this.stackLength = 0;
     this.currentElem = null;
     
     this.push = this.push.bind(this);
@@ -23,7 +20,7 @@ class Stack {
   }
 
   push(elem) {
-    if (Stack.stackLength === this.maxStackLength) {
+    if (this.stackLength === this.maxStackLength) {
       throw new Error('Стек переполнен.');
     }
 
@@ -31,44 +28,44 @@ class Stack {
       throw new Error('Не введено значения для добавления.');
     }
 
-    let node = new Node(elem, Stack.head);
-    Stack.stackLength++;
-    Stack.head = node;
+    let node = new Node(elem, this.head);
+    this.stackLength++;
+    this.head = node;
     this.currentElem = node.data;
   }
 
   pop() {
-    if (Stack.stackLength === 0) {
+    if (this.stackLength === 0) {
       throw new Error('Стек пуст.');
     }
 
-    Stack.stackLength--;
+    this.stackLength--;
 
-    if (Stack.head.next === null) {
+    if (this.head.next === null) {
       this.currentElem = null;
-      Stack.head = null;
+      this.head = null;
       let returnValue = null;
       
       return returnValue;
     }
 
-    let returnValue = Stack.head.data;
-    this.currentElem = Stack.head.next.data;
-    Stack.head = Stack.head.next;
+    let returnValue = this.head.data;
+    this.currentElem = this.head.next.data;
+    this.head = this.head.next;
 
     return returnValue;
   }
 
   peek() {
-    if (!Stack.head) {
+    if (!this.head) {
       return null;
     }
 
-    return Stack.head.data;
+    return this.head.data;
   }
 
   isEmpty() {
-    if (!Stack.head) {
+    if (!this.head) {
       return true;
     }
 
@@ -77,7 +74,7 @@ class Stack {
 
   toArray() {
     const output = [];
-    let current = Stack.head;
+    let current = this.head;
 
     while (current) {
       output.push(current.data);
