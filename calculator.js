@@ -4,7 +4,7 @@ function checkNumberValid(num) {
 
 class Calculator {
   constructor(x, y) {
-    if (x === undefined || y === undefined) {
+    if (arguments.length !== 2) {
       throw new Error('Требуется ввести 2 значения.');
     }
 

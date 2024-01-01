@@ -2,9 +2,7 @@ let concatStrings = function(str, separator = '') {
   let resultArr = [ str ];
 
   return function inner(arg) {
-    const argExistAndString = arg && typeof arg === 'string';
-    
-    if (argExistAndString || arg === '') {
+    if (typeof arg === 'string') {
       resultArr.push(arg);
       
       return function(...nextFuncArg) {
