@@ -6,10 +6,8 @@ function makeObjectDeepCopy(obj) {
     const dateObjectType = obj[key].constructor.name === 'Date';
     const notPlainObject = errorObjectType || dateObjectType;
     
-    if (typeof obj[key] === 'function') {
-      newObj[key] = obj[key];
-    } else if (Array.isArray(obj[key])) {
-      newObj[key] = [...obj[key]];
+    if (Array.isArray(obj[key])) {
+      obj[key] = [...obj[key]];
     } else if (typeof obj[key] === 'object' && !notPlainObject) {
       newObj[key] = makeObjectDeepCopy(obj[key]);
     } else {
@@ -21,27 +19,21 @@ function makeObjectDeepCopy(obj) {
 }
 
 function selectFromInterval(arr, firstIntVal, secondIntVal) {
-  let resultArr = [];
+  const resultArr = [];
   const notValidIntVals = isNaN(firstIntVal) || isNaN(secondIntVal);
+
+  if (arr.some((elem) => isNaN(elem))) {
+    throw new Error('Переданое первое значение должно являться массивом с числовыми значениями.');
+  }
 
   if (notValidIntVals) {
     throw new Error('Одно из значений интервала не является валидным числом.');
   }
 
-  const arrWithIntVals = [firstIntVal, secondIntVal];
-  const sortedIntervalValues = arrWithIntVals.sort((a, b) => a - b);
-  const minIntervalValue = sortedIntervalValues[0];
-  const maxIntervalValue = sortedIntervalValues[1];
+  const [minIntervalValue, maxIntervalValue] = [firstIntVal, secondIntVal].sort((a, b) => a - b);
   
   for (let key of arr) {
-    const keyGreaterOrEqualsThanMin = key >= minIntervalValue;
-    const keyLessOrEqualsThanMax = key <= maxIntervalValue;
-    const compareValsInArr = keyGreaterOrEqualsThanMin && keyLessOrEqualsThanMax;
-
-    if (isNaN(key)) {
-      resultArr = [];
-      throw new Error('Переданое первое значение должно являться массивом с числовыми значениями.');
-    }
+    const compareValsInArr = key >= minIntervalValue && key <= maxIntervalValue;
 
     if (compareValsInArr) {
       resultArr.push(key);
@@ -77,11 +69,11 @@ const myIterable = {
             value: this.current++,
             done: false,
           };
-        } else {
-          return {
-            done: true,
-          };
         }
+
+        return {
+          done: true,
+        };
       }
     }
   }
