@@ -1,5 +1,5 @@
 let concatStrings = function(str, separator = '') {
-  let resultArr = [str];
+  let resultArr = [ str ];
 
   return function inner(arg) {
     const argExistAndString = arg && typeof arg === 'string';
@@ -14,8 +14,8 @@ let concatStrings = function(str, separator = '') {
 
     if (typeof separator === 'string') {
       return resultArr.join(separator);
-    } else {
-      return resultArr.join('');
     }
+
+    return resultArr.join('');
   }
 }
