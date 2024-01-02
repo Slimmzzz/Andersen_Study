@@ -18,7 +18,7 @@ class LinkedList {
   }
 
   append(elem) {
-    let node = new Node(elem, null, this.tail);
+    const node = new Node(elem, null, this.tail);
 
     if (this.tail) {
       this.tail.next = node;
@@ -33,7 +33,7 @@ class LinkedList {
   }
 
   prepend(elem) {
-    let node = new Node(elem, this.head)
+    const node = new Node(elem, this.head)
     
     if (this.head) {
       this.head.prev = node;

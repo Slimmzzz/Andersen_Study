@@ -28,7 +28,7 @@ class Stack {
       throw new Error('Не введено значения для добавления.');
     }
 
-    let node = new Node(elem, this.head);
+    const node = new Node(elem, this.head);
     this.stackLength++;
     this.head = node;
     this.currentElem = node.data;
@@ -40,16 +40,15 @@ class Stack {
     }
 
     this.stackLength--;
+    const returnValue = this.head.data;
 
     if (this.head.next === null) {
       this.currentElem = null;
       this.head = null;
-      let returnValue = null;
       
       return returnValue;
     }
 
-    let returnValue = this.head.data;
     this.currentElem = this.head.next.data;
     this.head = this.head.next;
 
