@@ -1,0 +1,115 @@
+html, body {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  width: 500px;
+  border: 5px solid purple;
+  border-radius: 7px;
+  margin: 100px auto;
+  background-color: rgba(67, 255, 100, 0.2);
+}
+
+.wrapper_inner {
+  margin: 40px;
+  max-width: calc(100% - 10px);
+  max-height: calc(100% - 10px);
+}
+
+#result_bar {
+  max-width: calc(100% - 10px);
+  height: 120px;
+  border: 5px solid gray;
+  border-radius: 7px;
+  background: #FFF;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+#main_result {
+  width: 405px;
+  border: none;
+  font-size: 55px;
+  position: relative;
+  pointer-events: none;
+  text-align: right;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+}
+
+.line-through {
+  max-width: 390px;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  bottom: 33px;
+  margin: 0 10px;
+}
+
+#bottom_result {
+  width: 405px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  pointer-events: none;
+  text-align: right;
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.buttons {
+  width: 100%;
+  height: 330px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.buttons .button {
+  width: 67px;
+  height: 67px;
+  font-size: 40px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #D7D7D7;
+  color: #4346F7;
+  background: #F0F0F0;
+  transition: all 0.1s;
+  border-radius: 4px;
+}
+.buttons .button.equals {
+  height: 154px;
+  color: #FFF;
+  background: #3932FF;
+}
+.buttons .button.reset {
+  font-weight: 400;
+  color: #FFF;
+  background: #F90000;
+}
+.buttons .button.operator {
+  color: #FFF;
+  font-weight: 400;
+  background: #727272;
+}
+.buttons .button.delete_one, .buttons .button.reverse_minus {
+  font-weight: 400;
+  background: #979797;
+}
+.buttons .button:hover {
+  color: #FF5151;
+}
+.buttons .button:active {
+  border: 1px solid #D7D7D7;
+  transform: translate(1px, 2px);
+}/*# sourceMappingURL=style.css.map */
