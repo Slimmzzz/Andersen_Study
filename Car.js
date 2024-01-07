@@ -1,10 +1,10 @@
 class Car {
-  #brand = undefined;
-  #model = undefined;
-  #yearOfManufacturing = undefined;
-  #maxSpeed = undefined;
-  #maxFuelVolume = undefined;
-  #fuelConsumption = undefined;
+  #brand;
+  #model;
+  #yearOfManufacturing;
+  #maxSpeed;
+  #maxFuelVolume;
+  #fuelConsumption;
   #currentFuelVolume = 0;
   #isStarted = false;
   #mileage = 0;
@@ -19,11 +19,6 @@ class Car {
     this.#currentFuelVolume;
     this.#isStarted;
     this.#mileage;
-
-    this.start = this.start.bind(this);
-    this.shutDownEngine = this.shutDownEngine.bind(this);
-    this.fillUpGasTank = this.fillUpGasTank.bind(this);
-    this.drive = this.drive.bind(this);
   }
 
   get brand() {
@@ -35,7 +30,7 @@ class Car {
       throw new Error('Название бренда должно быть строкой.');
     }
     
-    if (brandName.length < 1 || brandName.length > 50) {
+    if ( isInRange(brandName.length, 1, 50) ) {
       throw new Error('Название бренда должно быть до 1 до 50 символов включительно.');
     }
     
@@ -51,7 +46,7 @@ class Car {
       throw new Error('Название бренда должно быть строкой.');
     }
     
-    if (modelType.length < 1 || modelType.length > 50) {
+    if ( isInRange(modelType.length, 1, 50) ) {
       throw new Error('Название бренда должно быть до 1 до 50 символов включительно.');
     }
     
@@ -63,13 +58,13 @@ class Car {
   };
 
   set yearOfManufacturing(year) {
-    if (typeof year !== 'number' || year === null) {
+    if ( isNumberOrNull(year) ) {
       throw new Error('Год должен быть числом.');
     }
 
     const currentYear = new Date().getFullYear;
 
-    if (year < 1900 || year > currentYear) {
+    if ( isInRange(year, 1900, currentYear) ) {
       throw new Error('Год должен быть от 1900 до текущего.');
     }
 
@@ -81,11 +76,11 @@ class Car {
   };
 
   set maxSpeed(speed) {
-    if (typeof speed !== 'number' || speed === null) {
+    if ( isNumberOrNull(speed) ) {
       throw new Error('Заданное значение должно быть числом.');
     }
 
-    if (speed < 100 || speed > 300) {
+    if ( isInRange(speed, 100, 300) ) {
       throw new Error('Указанное значение должно быть в пределах от 100 до 300.');
     }
 
@@ -97,11 +92,11 @@ class Car {
   };
 
   set maxFuelVolume(fuelVolume) {
-    if (typeof fuelVolume !== 'number' || fuelVolume === null) {
+    if ( isNumberOrNull(fuelVolume) ) {
       throw new Error('Введенное значение должно быть числом');
     }
 
-    if (fuelVolume < 5 || fuelVolume > 20) {
+    if ( isInRange(fuelVolume, 5, 20) ) {
       throw new Error('Значение должно быть от 5 до 20.');
     }
 
@@ -113,7 +108,7 @@ class Car {
   };
 
   set fuelConsumption(litres) {
-    if (typeof litres !== 'number' || litres === null) {
+    if ( isNumberOrNull(litres) ) {
       throw new Error('Введенное значение должно быть числом.');
     }
 
@@ -153,7 +148,7 @@ class Car {
       throw new Error('Чтобы заправить машину, должен быть указан размер топливного бака.');
     }
 
-    if (typeof fuelToFill !== 'number' || fuelToFill === null || fuelToFill <= 0) {
+    if (isNumberOrNull(fuelToFill) || fuelToFill <= 0) {
       throw new Error('Неверное количества топлива для заправки.');
     }
 
@@ -167,11 +162,11 @@ class Car {
   };
 
   drive(speed, driveTime) {
-    if (typeof speed !== 'number' || speed === null || speed <= 0) {
+    if (isNumberOrNull(speed) || speed <= 0) {
       throw new Error('Неверная скорость.');
     }
 
-    if (typeof driveTime !== 'number' || driveTime === null || driveTime <= 0) {
+    if (isNumberOrNull(driveTime) || driveTime <= 0) {
       throw new Error('Неверное количество часов.');
     }
 
@@ -201,4 +196,12 @@ class Car {
     this.#currentFuelVolume = this.#currentFuelVolume - fuelUsed;
     this.#mileage = this.#mileage + kilometersDriven;
   };
+}
+
+function isInRange(valueToCheck, min, max) {
+  return valueToCheck < min || valueToCheck > max;
+}
+
+function isNumberOrNull(valueToCheck) {
+  return typeof valueToCheck !== 'number' || valueToCheck === null;
 }
