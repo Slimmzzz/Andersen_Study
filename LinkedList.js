@@ -10,11 +10,6 @@ class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
-
-    this.append = this.append.bind(this);
-    this.prepend = this.prepend.bind(this);
-    this.find = this.find.bind(this);
-    this.toArray = this.toArray.bind(this);
   }
 
   append(elem) {
@@ -24,7 +19,7 @@ class LinkedList {
       this.tail.next = node;
     }
 
-    if(!this.head) {
+    if (!this.head) {
       this.head = node;
     }
 

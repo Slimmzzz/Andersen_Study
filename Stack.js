@@ -11,12 +11,6 @@ class Stack {
     this.head = null;
     this.stackLength = 0;
     this.currentElem = null;
-    
-    this.push = this.push.bind(this);
-    this.pop = this.pop.bind(this);
-    this.peek = this.peek.bind(this);
-    this.isEmpty = this.isEmpty.bind(this);
-    this.toArray = this.toArray.bind(this);
   }
 
   push(elem) {
@@ -29,6 +23,7 @@ class Stack {
     }
 
     const node = new Node(elem, this.head);
+
     this.stackLength++;
     this.head = node;
     this.currentElem = node.data;
@@ -40,6 +35,7 @@ class Stack {
     }
 
     this.stackLength--;
+    
     const returnValue = this.head.data;
 
     if (this.head.next === null) {
@@ -64,11 +60,7 @@ class Stack {
   }
 
   isEmpty() {
-    if (!this.head) {
-      return true;
-    }
-
-    return false;
+    return !this.head;
   }
 
   toArray() {
