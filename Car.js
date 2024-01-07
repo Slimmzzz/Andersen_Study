@@ -19,11 +19,6 @@ class Car {
     this.#currentFuelVolume;
     this.#isStarted;
     this.#mileage;
-
-    this.start = this.start.bind(this);
-    this.shutDownEngine = this.shutDownEngine.bind(this);
-    this.fillUpGasTank = this.fillUpGasTank.bind(this);
-    this.drive = this.drive.bind(this);
   }
 
   get brand() {
