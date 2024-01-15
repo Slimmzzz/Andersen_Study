@@ -12,34 +12,34 @@
   <div class="wrapper">
     <div class="wrapper_inner">
       <div id="result_bar">
-        <input readonly value="0" type="text" name="" id="main_result">
+        <input readonly value="0" type="text" name="" class="main_result" id="main_result">
         <div class="line-through"></div>
-        <input readonly value="0" type="text" name="" id="bottom_result">
+        <div id="history"></div>
       </div>
-      <div class="buttons">
-        <button class="button sign" id="button sign" type="button">7</button>
-        <button class="button sign" id="button sign" type="button">4</button>
-        <button class="button sign" id="button sign" type="button">1</button>
-        <button class="button reset" id="button reset" type="button">С</button>
-        <button class="button sign" id="button sign" type="button">8</button>
-        <button class="button sign" id="button sign" type="button">5</button>
-        <button class="button sign" id="button sign" type="button">2</button>
-        <button class="button sign" id="button sign" type="button">0</button>
-        <button class="button sign" id="button sign" type="button">9</button>
-        <button class="button sign" id="button sign" type="button">6</button>
-        <button class="button sign" id="button sign" type="button">3</button>
-        <button class="button sign" id="button sign" type="button">.</button>
-        <button class="button operator reverse_minus" id="button reverse_minus" type="button">+/-</button>
-        <button class="button operator sign" id="button sign" type="button">&#215;</button>
-        <button class="button operator sign" id="button sign" type="button">-</button>
-        <button class="button operator sign" id="button sign" type="button">+</button>
-        <button class="button operator delete_one" id="button delete_one" type="button">&#8594;</button>
-        <button class="button operator sign" id="button sign" type="button">&divide;</button>
-        <button class="button equals" id="button equals" type="button">=</button>
+      <div class="buttons" id="buttons">
+        <button class="button sign seven" data-value="7" type="button">7</button>
+        <button class="button sign four" data-value="4" type="button">4</button>
+        <button class="button sign one" data-value="1" type="button">1</button>
+        <button class="button reset" data-operation="clear" type="button">С</button>
+        <button class="button sign eight" data-value="8" type="button">8</button>
+        <button class="button sign five" data-value="5" type="button">5</button>
+        <button class="button sign two" data-value="2" type="button">2</button>
+        <button class="button sign zero" data-value="0" type="button">0</button>
+        <button class="button sign nine" data-value="9" type="button">9</button>
+        <button class="button sign six" data-value="6" type="button">6</button>
+        <button class="button sign three" data-value="3" type="button">3</button>
+        <button class="button sign dot" data-operation="dot" type="button">.</button>
+        <button class="button operator reverse_minus" data-operation="changePolarity" type="button">+/-</button>
+        <button class="button operator mult" data-operation="mult" type="button">×</button>
+        <button class="button operator minus" data-operation="minus" type="button">-</button>
+        <button class="button operator plus" data-operation="plus" type="button">+</button>
+        <button class="button operator backspace" data-operation="backspace" type="button">&#8594;</button>
+        <button class="button operator divide" data-operation="division" type="button">÷</button>
+        <button class="button operator equals" data-operation="equals" type="button">=</button>
 
       </div>
     </div>
   </div>
-  <script src=""></script>
+  <script src="./main.js"></script>
 </body>
 </html>

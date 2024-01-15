@@ -54,9 +54,11 @@ html, body {
   margin: 0 10px;
 }
 
-#bottom_result {
+#history {
   width: 405px;
-  border: none;
+  // height: 15px;
+  display: flex;
+  justify-content: flex-end;
   font-size: 18px;
   font-weight: 500;
   pointer-events: none;
@@ -65,6 +67,9 @@ html, body {
   left: 0;
   bottom: 5px;
   color: rgba(0, 0, 0, 0.3);
+  & > span:not(:last-child) {
+    margin-right: 15px;
+  }
 }
 
 .buttons {
@@ -84,7 +89,7 @@ html, body {
     border: 2px solid #D7D7D7;
     color: #4346F7;
     background: #F0F0F0;
-    transition: all 0.1s;
+    // transition: all 0.1s;
     border-radius: 4px;
 
     &.equals {
@@ -113,7 +118,7 @@ html, body {
     }
     &:active {
       border: 1px solid #D7D7D7;
-      transform: translate(1px, 2px)
+      transform: translate(1px, 1px)
     }
   }
 }
