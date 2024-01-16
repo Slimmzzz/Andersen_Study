@@ -1,16 +1,17 @@
 const resultBarContainer = document.getElementById('result_bar');
 const upperInput = document.getElementById('main_result');
 const buttonsContainer = document.getElementById('buttons');
-const buttons = buttonsContainer.getElementsByClassName('button');
-const history = document.getElementById('history');
+const historyBar = document.getElementById('history');
+
 const CURRENT_OPERATION = {
   operand1: '',
   operand2: '',
   operator: ''
 }
 let LAST_PRESSED_BUTTON = null;
+
 const HANDLERS = {
-  numbersHandler(eTarget) {
+  numbersHandler(eventTarget) {
     if ( this.isEqualsBeenLastPressedButton() ) {
       CURRENT_OPERATION.operand1 = '';
       CURRENT_OPERATION.operand2 = '';
@@ -24,12 +25,12 @@ const HANDLERS = {
         this.createHistoryItem();
       }
   
-      CURRENT_OPERATION.operand1 += eTarget.dataset.value;
+      CURRENT_OPERATION.operand1 += eventTarget.dataset.value;
       CURRENT_OPERATION.operand1 = CURRENT_OPERATION.operand1.replace(/^([0]+(?!\.))?/, '');
   
       valueToInput = CURRENT_OPERATION.operand1;
     } else {
-      CURRENT_OPERATION.operand2 += eTarget.dataset.value;
+      CURRENT_OPERATION.operand2 += eventTarget.dataset.value;
       CURRENT_OPERATION.operand2 = (CURRENT_OPERATION.operand2 === '0') ? '0' : CURRENT_OPERATION.operand2.replace(/^(-)?([0]+(?!\.))?/, '$1');
       
       valueToInput = `${CURRENT_OPERATION.operand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}${CURRENT_OPERATION.operand2}`;
@@ -37,8 +38,9 @@ const HANDLERS = {
     
     this.renderIntoInput(valueToInput);
     this.writeToHistoryItem(valueToInput);
-  },  
-  operatorsHandler(eTarget) {
+  },
+
+  operatorsHandler(eventTarget) {
     if ( this.isEqualsBeenLastPressedButton() ) {
       CURRENT_OPERATION.operand2 = '';
       CURRENT_OPERATION.operator = '';
@@ -63,11 +65,12 @@ const HANDLERS = {
       this.createHistoryItem();
     }
     
-    CURRENT_OPERATION.operator = eTarget.dataset.operation;
+    CURRENT_OPERATION.operator = eventTarget.dataset.operation;
   
     this.renderIntoInput(`${CURRENT_OPERATION.operand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}`);
     this.writeToHistoryItem(`${CURRENT_OPERATION.operand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}`);
-  },  
+  },
+
   equalBtnHandler() {
     if ( this.isEqualsBeenLastPressedButton() ) {
       this.createHistoryItem();
@@ -86,11 +89,13 @@ const HANDLERS = {
     let oldOperand1 = CURRENT_OPERATION.operand1;
   
     CURRENT_OPERATION.operator = CURRENT_OPERATION.operator || 'plus';
+    
     this.makeOperationAndHandleDivByZero();
   
     this.writeToHistoryItem(`${oldOperand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}${CURRENT_OPERATION.operand2}=${CURRENT_OPERATION.operand1}`);
     this.renderIntoInput(`${CURRENT_OPERATION.operand1}`);
-  },  
+  },
+
   clearBtnHandler() {
     CURRENT_OPERATION.operand1 = '';
     CURRENT_OPERATION.operand2 = '';
@@ -98,13 +103,14 @@ const HANDLERS = {
   
     this.renderIntoInput('0');
   
-    [...history.children].forEach((child) => {
+    [...historyBar.children].forEach((child) => {
       child.remove();
     });
   
     this.createHistoryItem();
     this.writeToHistoryItem('0');
-  },  
+  },
+
   backspaceBtnHandler() {
     if ( this.isEqualsBeenLastPressedButton() ) {
       CURRENT_OPERATION.operand2 = '';
@@ -136,7 +142,8 @@ const HANDLERS = {
     
     this.writeToHistoryItem(valueToRender);
     this.renderIntoInput(valueToRender);
-  },  
+  },
+
   changePolarityBtnHandler() {
     if ( this.isEqualsBeenLastPressedButton() ) {
       CURRENT_OPERATION.operand2 = '';
@@ -152,7 +159,7 @@ const HANDLERS = {
     } else if (!CURRENT_OPERATION.operand1) {
       CURRENT_OPERATION.operand1 = '-0';
       
-      if (!history.children.length) {
+      if (!historyBar.children.length) {
         this.createHistoryItem();
       }
     }
@@ -162,6 +169,7 @@ const HANDLERS = {
     this.writeToHistoryItem(valueToRender);
     this.renderIntoInput(valueToRender);
   },
+
   dotBtnHandler() {
     if (!CURRENT_OPERATION.operand1) {
       CURRENT_OPERATION.operand1 = '0.';
@@ -180,6 +188,7 @@ const HANDLERS = {
     this.writeToHistoryItem(valueToRender);
     this.renderIntoInput(valueToRender);
   },
+
   getOperatorRender(operatorName) {
     switch (operatorName) {
       case 'plus':
@@ -198,7 +207,13 @@ const HANDLERS = {
         return '';
     }
   },
+
   makeOperation() {
+    const invalidValuesToDivision = CURRENT_OPERATION.operand2 === '0' ||
+                                    CURRENT_OPERATION.operand2 === '0.' ||
+                                    CURRENT_OPERATION.operand2 === '(-0)' ||
+                                    CURRENT_OPERATION.operand2 === '(-0.)';
+
     switch(CURRENT_OPERATION.operator) {
       case 'plus':
         return String(((CURRENT_OPERATION.operand1 * 1e9) + (CURRENT_OPERATION.operand2.replace(/[()]/g, '') * 1e9)) / 1e9);
@@ -207,7 +222,7 @@ const HANDLERS = {
         return String(((CURRENT_OPERATION.operand1 * 1e9) - (CURRENT_OPERATION.operand2.replace(/[()]/g, '') * 1e9)) / 1e9);
   
       case 'division':
-        if (CURRENT_OPERATION.operand2 === '0' || CURRENT_OPERATION.operand2 === '-0') {
+        if (invalidValuesToDivision) {
           throw new Error('На 0 делить нельзя!');
         }
   
@@ -217,6 +232,7 @@ const HANDLERS = {
         return String(((CURRENT_OPERATION.operand1 * 10) * (CURRENT_OPERATION.operand2.replace(/[()]/g, '') * 10)) / 100);
     }
   },
+
   renderIntoInput(value) {
     document.dispatchEvent(new CustomEvent('render-into-input', {
       detail: {
@@ -224,20 +240,23 @@ const HANDLERS = {
       }
     }));
   },
+
   writeToHistoryItem(str) {
     const historyItem = document.querySelector('#history > span:last-of-type');
   
     historyItem.textContent = str;
   },
+
   createHistoryItem() {
-    if (Array.from(history.querySelectorAll('span')).length === 2) {
-      history.children[0].remove();
+    if (Array.from(historyBar.querySelectorAll('span')).length === 2) {
+      historyBar.children[0].remove();
     }
   
-    history.appendChild(document.createElement('span'));
+    historyBar.appendChild(document.createElement('span'));
   },
+
   renderError(error) {
-    const errorDiv = history.appendChild(document.createElement('div'));
+    const errorDiv = historyBar.appendChild(document.createElement('div'));
   
     errorDiv.setAttribute('style', 'position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;text-align:right;background-color:#FFF;color:red;');
     errorDiv.textContent = error.message;
@@ -248,9 +267,11 @@ const HANDLERS = {
       once: true,
     });
   },
-  isDatasetFits(eTarget, dataType) {
-    return eTarget.dataset.operation === dataType;
+
+  isDatasetFits(eventTarget, dataType) {
+    return eventTarget.dataset.operation === dataType;
   },
+
   makeOperationAndHandleDivByZero() {
     try {
       CURRENT_OPERATION.operand1 = this.makeOperation();
@@ -258,6 +279,7 @@ const HANDLERS = {
       this.renderError(error);
     }
   },
+
   isEqualsBeenLastPressedButton() {
     return LAST_PRESSED_BUTTON && LAST_PRESSED_BUTTON.dataset.operation === 'equals';
   }
@@ -282,7 +304,7 @@ function mouseClicksHandler(event) {
       HANDLERS.dotBtnHandler(target);
     }
 
-    LAST_PRESSED_BUTTON = event.target;
+    LAST_PRESSED_BUTTON = target;
   }
 }
 
@@ -318,7 +340,7 @@ function keyboardClicksHandler(event) {
   }
 }
 
-function customEventHandler(event) {
+function renderIntoInputHandler(event) {
   upperInput.value = event.detail.value || '0';
 }
 
@@ -327,4 +349,4 @@ HANDLERS.writeToHistoryItem('0');
 
 buttonsContainer.addEventListener('click', mouseClicksHandler);
 document.addEventListener('keyup', keyboardClicksHandler);
-document.addEventListener('render-into-input', customEventHandler);
+document.addEventListener('render-into-input', renderIntoInputHandler);
