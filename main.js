@@ -56,7 +56,7 @@ const HANDLERS = {
     if (CURRENT_OPERATION.operand1 && CURRENT_OPERATION.operand2) {
       let oldOperand1 = CURRENT_OPERATION.operand1;
   
-      this.makeOperationAndHandleDivByZero();
+      this.makeOperationOrHandleDivByZero();
   
       this.writeToHistoryItem(`${oldOperand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}${CURRENT_OPERATION.operand2}=${CURRENT_OPERATION.operand1}`);
       
@@ -89,8 +89,8 @@ const HANDLERS = {
     let oldOperand1 = CURRENT_OPERATION.operand1;
   
     CURRENT_OPERATION.operator = CURRENT_OPERATION.operator || 'plus';
-    
-    this.makeOperationAndHandleDivByZero();
+
+    this.makeOperationOrHandleDivByZero();
   
     this.writeToHistoryItem(`${oldOperand1}${this.getOperatorRender(CURRENT_OPERATION.operator)}${CURRENT_OPERATION.operand2}=${CURRENT_OPERATION.operand1}`);
     this.renderIntoInput(`${CURRENT_OPERATION.operand1}`);
@@ -272,7 +272,7 @@ const HANDLERS = {
     return eventTarget.dataset.operation === dataType;
   },
 
-  makeOperationAndHandleDivByZero() {
+  makeOperationOrHandleDivByZero() {
     try {
       CURRENT_OPERATION.operand1 = this.makeOperation();
     } catch (error) {
